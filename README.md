@@ -10,12 +10,3 @@ Personal portfolio website.
 - Clash Display + Satoshi (Fontshare) typography
 - Deployed on Vercel
 
-## Run locally
-
-```bash
-npx serve .
-```
-
-## License
-
-MIT

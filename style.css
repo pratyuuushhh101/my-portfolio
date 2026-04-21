@@ -35,6 +35,254 @@
 }
 
 /* ===============================
+   WIP Overlay
+   =============================== */
+.wip-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(4, 4, 4, 0.92);
+    backdrop-filter: blur(24px) saturate(120%);
+    -webkit-backdrop-filter: blur(24px) saturate(120%);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+.wip-overlay.dismissed {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.wip-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(232, 255, 71, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 255, 71, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: wipGridDrift 12s linear infinite;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
+}
+
+@keyframes wipGridDrift {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 60px 60px;
+    }
+}
+
+.wip-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 520px;
+    padding: 48px 40px;
+    background: rgba(14, 14, 14, 0.7);
+    border: 1px solid rgba(232, 255, 71, 0.08);
+    border-radius: 24px;
+    box-shadow:
+        0 0 80px rgba(232, 255, 71, 0.04),
+        0 24px 80px rgba(0, 0, 0, 0.6);
+    animation: wipCardEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+}
+
+@keyframes wipCardEnter {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.wip-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 18px 6px 12px;
+    background: rgba(232, 255, 71, 0.08);
+    border: 1px solid rgba(232, 255, 71, 0.15);
+    border-radius: 999px;
+    margin-bottom: 32px;
+}
+
+.wip-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    animation: wipPulse 2s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(232, 255, 71, 0.5);
+}
+
+@keyframes wipPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(0.7);
+    }
+}
+
+.wip-badge-text {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: var(--accent-primary);
+}
+
+.wip-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+}
+
+.wip-highlight {
+    background: linear-gradient(135deg, var(--accent-primary), #c4d63a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.wip-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 32px;
+}
+
+.wip-description strong {
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.wip-status-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 36px;
+}
+
+.wip-status-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: var(--transition-fast);
+}
+
+.wip-status-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(232, 255, 71, 0.1);
+}
+
+.wip-status-icon {
+    font-size: 1.1rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.wip-status-warn {
+    background: rgba(255, 189, 46, 0.1);
+    color: #ffbd2e;
+}
+
+.wip-status-active {
+    background: rgba(40, 200, 64, 0.1);
+    color: #28c840;
+    animation: wipSpin 3s linear infinite;
+}
+
+@keyframes wipSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.wip-status-info {
+    background: rgba(100, 160, 255, 0.1);
+    color: #64a0ff;
+}
+
+.wip-status-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.3px;
+}
+
+.wip-dismiss-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    color: #080808;
+    background: var(--accent-primary);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.wip-dismiss-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(232, 255, 71, 0.25);
+}
+
+.wip-dismiss-btn:hover svg {
+    transform: translateX(3px);
+}
+
+.wip-dismiss-btn svg {
+    transition: var(--transition-fast);
+}
+
+@media (max-width: 480px) {
+    .wip-content {
+        margin: 16px;
+        padding: 32px 24px;
+    }
+
+    .wip-title {
+        font-size: 1.8rem;
+    }
+}
+
+/* ===============================
    Reset
    =============================== */
 *,

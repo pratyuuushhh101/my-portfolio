@@ -21,6 +21,45 @@
 </head>
 
 <body>
+    <!-- Under Construction Overlay -->
+    <div class="wip-overlay" id="wipOverlay">
+        <div class="wip-bg-grid"></div>
+        <div class="wip-content">
+            <div class="wip-badge">
+                <span class="wip-pulse"></span>
+                <span class="wip-badge-text">WORK IN PROGRESS</span>
+            </div>
+            <h1 class="wip-title">This site is<br><span class="wip-highlight">not ready yet.</span></h1>
+            <p class="wip-description">
+                I'm still building this portfolio. Some information you see here
+                may be <strong>inaccurate</strong>, <strong>incomplete</strong>, or simply <strong>placeholder</strong>
+                content.
+            </p>
+            <div class="wip-status-grid">
+                <div class="wip-status-item">
+                    <span class="wip-status-icon wip-status-warn">⚠</span>
+                    <span class="wip-status-label">Content may be true/false</span>
+                </div>
+                <div class="wip-status-item">
+                    <span class="wip-status-icon wip-status-active">⟳</span>
+                    <span class="wip-status-label">Work is still ongoing</span>
+                </div>
+                <div class="wip-status-item">
+                    <span class="wip-status-icon wip-status-info">✦</span>
+                    <span class="wip-status-label">Design & content are drafts</span>
+                </div>
+            </div>
+            <button class="wip-dismiss-btn" id="wipDismiss">
+                <span>Continue Anyway</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <div class="cursor-glow" id="cursorGlow"></div>
 
     <!-- Navigation -->

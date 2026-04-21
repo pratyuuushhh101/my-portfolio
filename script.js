@@ -3,6 +3,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    initWipOverlay();
     initCursorGlow();
     initNavbar();
     initMobileMenu();
@@ -11,6 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
     initActiveNavLink();
     initScramble();
 });
+
+/* ===============================
+   WIP Overlay Dismiss
+   =============================== */
+function initWipOverlay() {
+    const overlay = document.getElementById('wipOverlay');
+    const btn = document.getElementById('wipDismiss');
+    if (!overlay || !btn) return;
+
+    // Lock scroll while overlay is visible
+    document.body.style.overflow = 'hidden';
+
+    btn.addEventListener('click', () => {
+        overlay.classList.add('dismissed');
+        document.body.style.overflow = '';
+    });
+}
 
 /* ===============================
    Cursor Glow

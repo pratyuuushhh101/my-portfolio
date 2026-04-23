@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initActiveNavLink();
     initScramble();
     initInteractiveTerminal();
+    initInteractiveExtras();
 });
 
 /* ===============================
@@ -239,7 +240,7 @@ function initInteractiveTerminal() {
         contact: () => scrollSection('contact', 'Navigating to contact section...'),
         whoami: () => 'pratz — full-stack dev & AI engineer. 4th sem CS student. I build multi-agent pipelines and ambient intelligence systems.',
         ls: (args) => {
-            if (args && args.includes('skills')) return 'Frontend: React, Next.js, Tailwind\nBackend: Node.js, Express, Django, Java\nOthers: Python, PostgreSQL, Docker, Git';
+            if (args && args.includes('skills')) return 'Frontend: React, Next.js, Tailwind\nBackend: Node.js, Express, Django, Java\nOthers: Python, Docker, Git';
             if (args && args.includes('projects')) return 'trialmatch/  datatalk/  ieee-ctf/  hotel-system/';
             return 'skills/  projects/  about/  contact/  passion.txt';
         },
@@ -262,35 +263,92 @@ function initInteractiveTerminal() {
         }
     };
 
-    input.addEventListener('keydown', (e) => {
+    const typeEffect = (text) => {
+        return new Promise(resolve => {
+            const line = document.createElement('div');
+            line.className = 't-history-line';
+            const outputSpan = document.createElement('span');
+            outputSpan.className = 't-output';
+            line.appendChild(outputSpan);
+            history.appendChild(line);
+
+            let i = 0;
+            const formattedText = text.replace(/\n/g, '\n> ');
+            outputSpan.innerHTML = '> ';
+
+            function type() {
+                if (i < text.length) {
+                    const char = text.charAt(i);
+                    if (char === '\n') {
+                        outputSpan.innerHTML += '<br>> ';
+                    } else {
+                        outputSpan.innerHTML += char;
+                    }
+                    i++;
+                    setTimeout(type, 15);
+                    body.scrollTop = body.scrollHeight;
+                } else {
+                    resolve();
+                }
+            }
+            type();
+        });
+    };
+
+    input.addEventListener('keydown', async (e) => {
         if (e.key === 'Enter') {
             const fullValue = input.value.trim();
             const parts = fullValue.split(' ');
             const cmd = parts[0].toLowerCase();
             const args = parts.slice(1);
 
+            input.value = '';
+
             // Echo command
             const echo = document.createElement('div');
             echo.className = 't-history-line';
             echo.innerHTML = `<span class="t-prompt">$</span> <span class="t-cmd">${fullValue}</span>`;
             history.appendChild(echo);
+            body.scrollTop = body.scrollHeight;
 
-            // Process command
             if (cmd) {
                 const output = commands[cmd] ? commands[cmd](args) : `command not found: ${cmd}`;
                 if (output !== null) {
-                    const result = document.createElement('div');
-                    result.className = 't-history-line';
-                    result.innerHTML = `<span class="t-output">> ${output.replace(/\n/g, '<br>> ')}</span>`;
-                    history.appendChild(result);
+                    input.disabled = true;
+                    await typeEffect(output);
+                    input.disabled = false;
+                    input.focus();
                 }
             }
-
-            input.value = '';
-            body.scrollTop = body.scrollHeight;
         }
     });
 
     // Focus input on click
     body.addEventListener('click', () => input.focus());
+}
+
+/* ===============================
+   Interactive Extras
+   =============================== */
+function initInteractiveExtras() {
+    // Scroll Progress
+    const progress = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        if (progress) progress.style.width = scrolled + "%";
+    }, { passive: true });
+
+    // Card Spotlight
+    const cards = document.querySelectorAll('.project-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
 }

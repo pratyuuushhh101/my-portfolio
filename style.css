@@ -80,19 +80,99 @@ ul {
 }
 
 /* ===============================
-   Cursor Glow
+   Enhanced Background
    =============================== */
+.bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: var(--bg-primary);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bg-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Cfilter id='noiseFilter'%3%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3%3C/filter%3%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3%3C/svg%3");
+}
+
+.bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(circle at center, black, transparent 90%);
+}
+
+.bg-glows {
+    position: absolute;
+    inset: 0;
+    filter: blur(120px);
+    opacity: 0.12;
+}
+
+.bg-glow-item {
+    position: absolute;
+    width: 55vw;
+    height: 55vw;
+    border-radius: 50%;
+    will-change: transform;
+}
+
+.glow-1 {
+    top: -15%;
+    right: -10%;
+    background: var(--accent-primary);
+    animation: floatGlow 25s infinite alternate;
+}
+
+.glow-2 {
+    bottom: -15%;
+    left: -10%;
+    background: var(--accent-secondary);
+    opacity: 0.4;
+    animation: floatGlow 35s infinite alternate-reverse;
+}
+
+@keyframes floatGlow {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(10%, 10%) scale(1.1);
+    }
+}
+
 .cursor-glow {
     position: fixed;
-    width: 400px;
-    height: 400px;
+    width: 600px;
+    height: 600px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(232, 255, 71, 0.04) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(232, 255, 71, 0.08) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
     transform: translate(-50%, -50%);
     will-change: transform;
     transition: opacity 0.3s;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--accent-primary);
+    z-index: 2001;
+    transition: width 0.1s ease;
 }
 
 /* ===============================
@@ -335,9 +415,15 @@ ul {
 
 .hero-actions {
     display: flex;
-    gap: 14px;
+    flex-direction: column;
+    gap: 16px;
     opacity: 0;
     animation: fadeIn 0.6s ease 0.55s forwards;
+}
+
+.hero-btns-main {
+    display: flex;
+    gap: 14px;
 }
 
 /* Buttons */
@@ -381,6 +467,20 @@ ul {
 
 .btn-secondary:hover {
     border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-resume {
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    width: fit-content;
+}
+
+.btn-resume:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
     transform: translateY(-2px);
 }
 
@@ -452,6 +552,7 @@ ul {
     flex-direction: column;
     scrollbar-width: thin;
     scrollbar-color: var(--border-color) transparent;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
 }
 
 .code-body::-webkit-scrollbar {
@@ -482,12 +583,22 @@ ul {
     background: transparent;
     border: none;
     color: var(--text-primary);
-    font-family: inherit;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
     font-size: inherit;
     outline: none;
     flex: 1;
     width: 100%;
     padding: 0;
+    caret-color: var(--accent-primary);
+    caret-shape: block;
+    /* Fat block cursor for modern browsers */
+}
+
+/* Simulating a fat block cursor fallback if possible */
+@supports not (caret-shape: block) {
+    #terminalInput {
+        text-shadow: 0 0 0 var(--text-primary), 1px 0 0 var(--accent-primary);
+    }
 }
 
 #terminalInput::placeholder {
@@ -747,6 +858,21 @@ ul {
     border-left-color: var(--accent-primary);
     transform: translateY(-4px);
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+}
+
+.project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(232, 255, 71, 0.06), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.project-card:hover::after {
+    opacity: 1;
 }
 
 .project-number {
@@ -1072,10 +1198,22 @@ ul {
     .hero-actions {
         flex-direction: column;
         width: 100%;
+        gap: 14px;
+    }
+
+    .hero-btns-main {
+        flex-direction: column;
+        width: 100%;
+        gap: 14px;
     }
 
     .btn {
         justify-content: center;
+        width: 100%;
+    }
+
+    .btn-resume {
+        width: 100%;
     }
 
     .skills-table {

@@ -492,7 +492,7 @@ ul {
 }
 
 .code-window {
-    width: 520px;
+    width: 620px;
     background: rgba(12, 12, 12, 0.9);
     border: 1px solid var(--border-color);
     border-radius: 14px;
@@ -546,7 +546,7 @@ ul {
 
 .code-body {
     padding: 20px;
-    height: 340px;
+    height: 400px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -566,7 +566,7 @@ ul {
 
 .t-history-line {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.84rem;
     line-height: 1.7;
     margin-bottom: 12px;
 }
@@ -576,7 +576,7 @@ ul {
     align-items: center;
     gap: 10px;
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.84rem;
 }
 
 #terminalInput {

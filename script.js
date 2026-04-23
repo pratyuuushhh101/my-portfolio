@@ -219,43 +219,45 @@ function animateCounter(element, target) {
 function initInteractiveTerminal() {
     const input = document.getElementById('terminalInput');
     const history = document.getElementById('terminalHistory');
-    const body = document.getElementById('terminalBody');
-    if (!input || !history || !body) return;
+    const tBody = document.getElementById('terminalBody');
+    if (!input || !history || !tBody) return;
 
-    const scrollSection = (id, msg) => {
-        setTimeout(() => {
+    const scrollSection = (id) => {
+        const link = document.querySelector(`.nav-link[href="#${id}"]`);
+        if (link) {
+            link.click();
+        } else {
             const el = document.getElementById(id);
             if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
-        return msg;
+        }
     };
 
     const commands = {
-        help: () => 'Available commands: about, skills, projects, datatalk, trialmatch, contact, whoami, ls, cat, git, clear, help',
-        about: () => scrollSection('about', 'Navigating to about section...'),
-        skills: () => scrollSection('skills', 'Navigating to skills section...'),
-        projects: () => scrollSection('projects', 'Navigating to projects section...'),
-        datatalk: () => scrollSection('project-datatalk', 'Navigating to DataTalk-AI...'),
-        trialmatch: () => scrollSection('project-trialmatch', 'Navigating to TrialMatch AI...'),
-        contact: () => scrollSection('contact', 'Navigating to contact section...'),
-        whoami: () => 'pratz — full-stack dev & AI engineer. 4th sem CS student. I build multi-agent pipelines and ambient intelligence systems.',
+        help: () => ({ text: 'Available commands: about, skills, projects, datatalk, trialmatch, contact, whoami, ls, cat, git, clear, help' }),
+        about: () => ({ text: 'Navigating to about section...', callback: () => scrollSection('about') }),
+        skills: () => ({ text: 'Navigating to skills section...', callback: () => scrollSection('skills') }),
+        projects: () => ({ text: 'Navigating to projects section...', callback: () => scrollSection('projects') }),
+        datatalk: () => ({ text: 'Navigating to DataTalk-AI...', callback: () => scrollSection('project-datatalk') }),
+        trialmatch: () => ({ text: 'Navigating to TrialMatch AI...', callback: () => scrollSection('project-trialmatch') }),
+        contact: () => ({ text: 'Navigating to contact section...', callback: () => scrollSection('contact') }),
+        whoami: () => ({ text: 'pratz — full-stack dev & AI engineer. 4th sem CS student. I build multi-agent pipelines and ambient intelligence systems.' }),
         ls: (args) => {
-            if (args && args.includes('skills')) return 'Frontend: React, Next.js, Tailwind\nBackend: Node.js, Express, Django, Java\nOthers: Python, Docker, Git';
-            if (args && args.includes('projects')) return 'trialmatch/  datatalk/  ieee-ctf/  hotel-system/';
-            return 'skills/  projects/  about/  contact/  passion.txt';
+            if (args && args.includes('skills')) return { text: 'Frontend: React, Next.js, Tailwind\nBackend: Node.js, Express, Django, Java\nOthers: Python, Docker, Git' };
+            if (args && args.includes('projects')) return { text: 'trialmatch/  datatalk/  ieee-ctf/  hotel-system/' };
+            return { text: 'skills/  projects/  about/  contact/  passion.txt' };
         },
         cat: (args) => {
             const file = args ? args[0] : '';
-            if (file === 'passion.txt') return 'building things people actually use.';
-            if (file === 'projects/trialmatch') return 'TrialMatch AI: Multi-agent clinical trial matching engine.';
-            if (file === 'projects/datatalk') return 'DataTalk-AI: Natural language to SQL analytics engine.';
-            return `cat: ${file || 'file'}: not found`;
+            if (file === 'passion.txt') return { text: 'building things people actually use.' };
+            if (file === 'projects/trialmatch') return { text: 'TrialMatch AI: Multi-agent clinical trial matching engine.' };
+            if (file === 'projects/datatalk') return { text: 'DataTalk-AI: Natural language to SQL analytics engine.' };
+            return { text: `cat: ${file || 'file'}: not found` };
         },
         git: (args) => {
             if (args && args.includes('log')) {
-                return 'a3f9c21 shipped arena @ hack2skill\n7b2e891 built ctf site for ieee techweek\n0f2b1d3 added trialmatch-ai to portfolio\ne4c2a11 released datatalk-ai (ambient intel for retail stores)';
+                return { text: 'a3f9c21 shipped arena @ hack2skill\n7b2e891 built ctf site for ieee techweek\n0f2b1d3 added trialmatch-ai to portfolio\ne4c2a11 released datatalk-ai (ambient intel for retail stores)' };
             }
-            return 'Usage: git log --oneline';
+            return { text: 'Usage: git log --oneline' };
         },
         clear: () => {
             history.innerHTML = '';
@@ -286,7 +288,7 @@ function initInteractiveTerminal() {
                     }
                     i++;
                     setTimeout(type, 15);
-                    body.scrollTop = body.scrollHeight;
+                    tBody.scrollTop = tBody.scrollHeight;
                 } else {
                     resolve();
                 }
@@ -309,13 +311,15 @@ function initInteractiveTerminal() {
             echo.className = 't-history-line';
             echo.innerHTML = `<span class="t-prompt">$</span> <span class="t-cmd">${fullValue}</span>`;
             history.appendChild(echo);
-            body.scrollTop = body.scrollHeight;
+            tBody.scrollTop = tBody.scrollHeight;
 
             if (cmd) {
-                const output = commands[cmd] ? commands[cmd](args) : `command not found: ${cmd}`;
-                if (output !== null) {
+                const result = commands[cmd] ? commands[cmd](args) : { text: `command not found: ${cmd}` };
+
+                if (result !== null) {
                     input.disabled = true;
-                    await typeEffect(output);
+                    await typeEffect(result.text);
+                    if (result.callback) result.callback();
                     input.disabled = false;
                     input.focus();
                 }
@@ -324,7 +328,7 @@ function initInteractiveTerminal() {
     });
 
     // Focus input on click
-    body.addEventListener('click', () => input.focus());
+    tBody.addEventListener('click', () => input.focus());
 }
 
 /* ===============================

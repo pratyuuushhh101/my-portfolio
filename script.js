@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initActiveNavLink();
     initScramble();
+    initInteractiveTerminal();
 });
 
 /* ===============================
@@ -228,4 +229,86 @@ function animateCounter(element, target) {
         }
         element.textContent = Math.floor(current);
     }, stepTime);
+}
+/* ===============================
+   Interactive Terminal
+   =============================== */
+function initInteractiveTerminal() {
+    const input = document.getElementById('terminalInput');
+    const history = document.getElementById('terminalHistory');
+    const body = document.getElementById('terminalBody');
+    if (!input || !history || !body) return;
+
+    const scrollSection = (id, msg) => {
+        setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+        return msg;
+    };
+
+    const commands = {
+        help: () => 'Available commands: about, skills, projects, datatalk, trialmatch, contact, whoami, ls, cat, git, clear, help',
+        about: () => scrollSection('about', 'Navigating to about section...'),
+        skills: () => scrollSection('skills', 'Navigating to skills section...'),
+        projects: () => scrollSection('projects', 'Navigating to projects section...'),
+        datatalk: () => scrollSection('project-datatalk', 'Navigating to DataTalk-AI...'),
+        trialmatch: () => scrollSection('project-trialmatch', 'Navigating to TrialMatch AI...'),
+        contact: () => scrollSection('contact', 'Navigating to contact section...'),
+        whoami: () => 'pratz — full-stack dev & AI engineer. 4th sem CS student. I build multi-agent pipelines and ambient intelligence systems.',
+        ls: (args) => {
+            if (args && args.includes('skills')) return 'Frontend: React, Next.js, Tailwind\nBackend: Node.js, Express, Django, Java\nOthers: Python, PostgreSQL, Docker, Git';
+            if (args && args.includes('projects')) return 'trialmatch/  datatalk/  ieee-ctf/  hotel-system/';
+            return 'skills/  projects/  about/  contact/  passion.txt';
+        },
+        cat: (args) => {
+            const file = args ? args[0] : '';
+            if (file === 'passion.txt') return 'building things people actually use.';
+            if (file === 'projects/trialmatch') return 'TrialMatch AI: Multi-agent clinical trial matching engine.';
+            if (file === 'projects/datatalk') return 'DataTalk-AI: Natural language to SQL analytics engine.';
+            return `cat: ${file || 'file'}: not found`;
+        },
+        git: (args) => {
+            if (args && args.includes('log')) {
+                return 'a3f9c21 shipped arena @ hack2skill\n7b2e891 built ctf site for ieee techweek\n0f2b1d3 added trialmatch-ai to portfolio\ne4c2a11 released datatalk-ai (ambient intel for retail stores)';
+            }
+            return 'Usage: git log --oneline';
+        },
+        clear: () => {
+            history.innerHTML = '';
+            return null;
+        }
+    };
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const fullValue = input.value.trim();
+            const parts = fullValue.split(' ');
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1);
+
+            // Echo command
+            const echo = document.createElement('div');
+            echo.className = 't-history-line';
+            echo.innerHTML = `<span class="t-prompt">$</span> <span class="t-cmd">${fullValue}</span>`;
+            history.appendChild(echo);
+
+            // Process command
+            if (cmd) {
+                const output = commands[cmd] ? commands[cmd](args) : `command not found: ${cmd}`;
+                if (output !== null) {
+                    const result = document.createElement('div');
+                    result.className = 't-history-line';
+                    result.innerHTML = `<span class="t-output">> ${output.replace(/\n/g, '<br>> ')}</span>`;
+                    history.appendChild(result);
+                }
+            }
+
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
+        }
+    });
+
+    // Focus input on click
+    body.addEventListener('click', () => input.focus());
 }

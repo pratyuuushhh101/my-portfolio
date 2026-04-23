@@ -640,7 +640,7 @@ ul {
 }
 
 .code-window {
-    width: 400px;
+    width: 520px;
     background: rgba(12, 12, 12, 0.9);
     border: 1px solid var(--border-color);
     border-radius: 14px;
@@ -694,19 +694,53 @@ ul {
 
 .code-body {
     padding: 20px;
-    overflow: hidden;
+    height: 340px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
 }
 
-.code-body code {
+.code-body::-webkit-scrollbar {
+    width: 4px;
+}
+
+.code-body::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+.t-history-line {
     font-family: var(--font-mono);
     font-size: 0.78rem;
-    line-height: 1.75;
-    white-space: pre;
+    line-height: 1.7;
+    margin-bottom: 12px;
 }
 
-.terminal-block {
-    opacity: 0;
-    animation: terminalFadeIn 0.8s ease 0.7s forwards;
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+}
+
+#terminalInput {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    flex: 1;
+    width: 100%;
+    padding: 0;
+}
+
+#terminalInput::placeholder {
+    color: var(--text-muted);
+    opacity: 0.5;
 }
 
 /* Terminal syntax */
@@ -721,23 +755,8 @@ ul {
 
 .t-output {
     color: var(--text-secondary);
-}
-
-.t-cursor {
-    animation: blink 1s step-end infinite;
-    color: var(--accent-primary);
-}
-
-@keyframes blink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
+    display: block;
+    padding-left: 2px;
 }
 
 @keyframes terminalFadeIn {
@@ -1070,6 +1089,41 @@ ul {
 
 .project-link svg {
     transition: var(--transition-fast);
+}
+
+/* Featured project — spans full width */
+.project-card--featured {
+    grid-column: 1 / -1;
+    border-left: 2px solid var(--accent-primary);
+    background: linear-gradient(135deg,
+            rgba(232, 255, 71, 0.03) 0%,
+            var(--bg-card) 40%);
+}
+
+.project-card--featured::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse 60% 80% at 0% 0%,
+            rgba(232, 255, 71, 0.04),
+            transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.project-card--featured .project-title {
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.5rem;
+}
+
+.project-card--featured:hover {
+    box-shadow: 0 8px 50px rgba(232, 255, 71, 0.08), 0 0 0 1px rgba(232, 255, 71, 0.12);
 }
 
 /* ===============================

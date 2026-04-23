@@ -126,20 +126,23 @@
                         </div>
                         <span class="code-title">terminal</span>
                     </div>
-                    <pre class="code-body"><code class="terminal-block"><span class="t-prompt">$</span> <span class="t-cmd">whoami</span>
-<span class="t-output">&gt; pratz — full-stack dev</span>
-
-<span class="t-prompt">$</span> <span class="t-cmd">ls ./skills</span>
-<span class="t-output">&gt; react  node  django  java  python</span>
-
-<span class="t-prompt">$</span> <span class="t-cmd">cat passion.txt</span>
-<span class="t-output">&gt; building things people actually use</span>
-
-<span class="t-prompt">$</span> <span class="t-cmd">git log --oneline</span>
-<span class="t-output">&gt; a3f9c21 shipped arena @ hack2skill</span>
-<span class="t-output">&gt; 7b2e891 built ctf site for ieee techweek</span>
-
-<span class="t-prompt">$</span> <span class="t-cursor">_</span></code></pre>
+                    <div class="code-body" id="terminalBody">
+                        <div id="terminalHistory">
+                            <div class="t-history-line">
+                                <span class="t-prompt">$</span> <span class="t-cmd">whoami</span><br>
+                                <span class="t-output">> pratz — full-stack dev</span>
+                            </div>
+                            <div class="t-history-line">
+                                <span class="t-prompt">$</span> <span class="t-cmd">ls ./skills</span><br>
+                                <span class="t-output">> react node django java python</span>
+                            </div>
+                        </div>
+                        <div class="terminal-input-line">
+                            <span class="t-prompt">$</span>
+                            <input type="text" id="terminalInput" spellcheck="false" autocomplete="off"
+                                placeholder="type 'help'...">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="scroll-indicator">
@@ -163,9 +166,10 @@
                             the line between software and experience.
                         </p>
                         <p>
-                            Previously: built an AI venue platform at Hack2Skill, co-built a CTF event
-                            site for IEEE TechWeek, and shipped a JavaFX hotel management system
-                            for a lab that nobody asked for but I actually made good.
+                            Recently: engineered a 5-agent AI pipeline for clinical trial reasoning (TrialMatch AI),
+                            built a voice-first "Ambient Intelligence" system for retail stores (DataTalk AI),
+                            and co-built a CTF site for IEEE TechWeek. I also shipped a JavaFX hotel
+                            management system that was actually good.
                         </p>
                         <p>
                             I care about code quality, fast load times, and not making users think.
@@ -251,9 +255,85 @@
                     <p class="section-subtitle">A selection of projects that showcase my skills and creativity</p>
                 </div>
                 <div class="projects-grid">
-                    <!-- Project 1 -->
-                    <article class="project-card" id="project-ieee-ctf">
+                    <!-- Project 1 — TrialMatch AI -->
+                    <article class="project-card project-card--featured" id="project-trialmatch">
                         <span class="project-number">01</span>
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="project-tag">AI</span>
+                                <span class="project-tag">Multi-Agent</span>
+                                <span class="project-tag">Full-Stack</span>
+                                <span class="project-tag">Healthcare</span>
+                            </div>
+                            <h3 class="project-title">TrialMatch AI</h3>
+                            <p class="project-meta">Next.js · Express · OpenAI SDK · Groq/Llama 4 · ClinicalTrials.gov
+                                API</p>
+                            <p class="project-description">
+                                Multi-agent AI pipeline that takes a patient summary and a clinical trial ID,
+                                then produces a structured, criterion-by-criterion eligibility assessment
+                                with verdicts, reasoning, and a coordinator brief — powered by a
+                                5-agent sequential pipeline (Extractor → Fetcher → Parser → Reasoner → Briefer)
+                                with zero-hallucination guardrails and provider-agnostic LLM integration.
+                            </p>
+                            <div class="project-links">
+                                <a href="https://github.com/pratyuuushhh101/trial-match-ai" class="project-link"
+                                    target="_blank" aria-label="TrialMatch AI source code">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                        </path>
+                                    </svg>
+                                    Source Code
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2 — DataTalk AI -->
+                    <article class="project-card" id="project-datatalk">
+                        <span class="project-number">02</span>
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="project-tag">AI</span>
+                                <span class="project-tag">Multimodal</span>
+                                <span class="project-tag">Ambient Intelligence</span>
+                            </div>
+                            <h3 class="project-title">DataTalk AI</h3>
+                            <p class="project-meta">React · Express · Azure OpenAI · Computer Vision · Speech SDK</p>
+                            <p class="project-description">
+                                Voice-first "Ambient Intelligence" system for Kirana stores.
+                                It captures shop activity via voice + camera feed, converting real-world
+                                retail interactions into structured business intelligence. Automates billing,
+                                generates real-time insights, and tracks inventory with zero manual data entry.
+                                Built with Azure Multimodal Fusion as part of Team RunTime Terror.
+                            </p>
+                            <div class="project-links">
+                                <a href="https://github.com/pratyuuushhh101/DataTalk-AI" class="project-link"
+                                    target="_blank" aria-label="DataTalk AI source code">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                        </path>
+                                    </svg>
+                                    Source Code
+                                </a>
+                                <a href="https://vimeo.com/1178296866" class="project-link" target="_blank"
+                                    aria-label="DataTalk AI live demo">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                    </svg>
+                                    Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 — IEEE CTF -->
+                    <article class="project-card" id="project-ieee-ctf">
+                        <span class="project-number">03</span>
                         <div class="project-content">
                             <div class="project-tags">
                                 <span class="project-tag">CTF</span>
@@ -285,9 +365,9 @@
                         </div>
                     </article>
 
-                    <!-- Project 2 -->
+                    <!-- Project 4 — Hotel Management -->
                     <article class="project-card" id="project-hotel">
-                        <span class="project-number">02</span>
+                        <span class="project-number">04</span>
                         <div class="project-content">
                             <div class="project-tags">
                                 <span class="project-tag">JavaFX</span>

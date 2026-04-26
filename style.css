@@ -834,6 +834,84 @@ ul {
 }
 
 /* ===============================
+   Coursework
+   =============================== */
+.coursework-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.course-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 28px 24px;
+    transition: var(--transition-medium);
+    overflow: hidden;
+}
+
+.course-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(232, 255, 71, 0.06), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.course-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.course-card:hover::before {
+    opacity: 1;
+}
+
+.course-code {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    background: rgba(232, 255, 71, 0.08);
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+}
+
+.course-name {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+    line-height: 1.3;
+}
+
+.course-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 16px;
+}
+
+.course-semester {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* ===============================
    Projects
    =============================== */
 .projects-grid {
@@ -1151,6 +1229,10 @@ ul {
         grid-template-columns: 1fr;
     }
 
+    .coursework-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .scroll-indicator {
         display: none;
     }
@@ -1219,6 +1301,10 @@ ul {
     .skills-table {
         grid-template-columns: 1fr;
         gap: 40px;
+    }
+
+    .coursework-grid {
+        grid-template-columns: 1fr;
     }
 
     .footer {

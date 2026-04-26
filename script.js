@@ -233,9 +233,10 @@ function initInteractiveTerminal() {
     };
 
     const commands = {
-        help: () => ({ text: 'Available commands: about, skills, projects, datatalk, trialmatch, contact, whoami, ls, cat, git, clear, help' }),
+        help: () => ({ text: 'Available commands: about, skills, courses, projects, datatalk, trialmatch, contact, whoami, ls, cat, git, clear, help' }),
         about: () => ({ text: 'Navigating to about section...', callback: () => scrollSection('about') }),
         skills: () => ({ text: 'Navigating to skills section...', callback: () => scrollSection('skills') }),
+        courses: () => ({ text: 'Navigating to coursework section...', callback: () => scrollSection('coursework') }),
         projects: () => ({ text: 'Navigating to projects section...', callback: () => scrollSection('projects') }),
         datatalk: () => ({ text: 'Navigating to DataTalk-AI...', callback: () => scrollSection('project-datatalk') }),
         trialmatch: () => ({ text: 'Navigating to TrialMatch AI...', callback: () => scrollSection('project-trialmatch') }),
@@ -244,7 +245,8 @@ function initInteractiveTerminal() {
         ls: (args) => {
             if (args && args.includes('skills')) return { text: 'Frontend: React, Next.js, Tailwind\nBackend: Node.js, Express, Django, Java\nOthers: Python, Docker, Git' };
             if (args && args.includes('projects')) return { text: 'trialmatch/  datatalk/  ieee-ctf/  hotel-system/' };
-            return { text: 'skills/  projects/  about/  contact/  passion.txt' };
+            if (args && args.includes('courses')) return { text: 'dsa  oop  dbms  os  networks  discrete-math' };
+            return { text: 'skills/  courses/  projects/  about/  contact/  passion.txt' };
         },
         cat: (args) => {
             const file = args ? args[0] : '';

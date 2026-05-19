@@ -41,6 +41,7 @@
             <li><a href="#skills" class="nav-link">Skills</a></li>
             <li><a href="#coursework" class="nav-link">Coursework</a></li>
             <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#achievements" class="nav-link">Achievements</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
         <a href="#contact" class="nav-cta">Let's Connect</a>
@@ -59,6 +60,7 @@
             <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
             <li><a href="#coursework" class="mobile-nav-link">Coursework</a></li>
             <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+            <li><a href="#achievements" class="mobile-nav-link">Achievements</a></li>
             <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
         </ul>
     </div>
@@ -144,18 +146,14 @@
                 <div class="about-content">
                     <div class="about-text">
                         <p>
-                            4th sem CS student from Kolkata. I build full-stack applications — backends
-                            that scale, frontends that don't suck, and occasionally things that blur
-                            the line between software and experience.
+                            4th sem IT student from Kolkata. I build full-stack applications — backends
+                            that scale, frontends that look good.
                         </p>
                         <p>
                             Recently: engineered a 5-agent AI pipeline for clinical trial reasoning (TrialMatch AI),
-                            built a voice-first "Ambient Intelligence" system for retail stores (DataTalk AI),
-                            and co-built a CTF site for IEEE TechWeek. I also shipped a JavaFX hotel
-                            management system that was actually good.
-                        </p>
-                        <p>
-                            I care about code quality, fast load times, and not making users think.
+                            built a voice-first "Ambient Intelligence" system for retail stores (DataTalk AI) which got
+                            me in top 50 for a hacakthon
+                            and co-built a CTF site for IEEE TechWeek.
                         </p>
                     </div>
                 </div>
@@ -171,7 +169,6 @@
                         <span>Docker</span><span class="marquee-dot">·</span>
                         <span>Git</span><span class="marquee-dot">·</span>
                         <span>TailwindCSS</span><span class="marquee-dot">·</span>
-                        <span>Three.js</span><span class="marquee-dot">·</span>
                         <span>Express</span><span class="marquee-dot">·</span>
                     </div>
                     <div class="marquee-content" aria-hidden="true">
@@ -183,7 +180,6 @@
                         <span>Docker</span><span class="marquee-dot">·</span>
                         <span>Git</span><span class="marquee-dot">·</span>
                         <span>TailwindCSS</span><span class="marquee-dot">·</span>
-                        <span>Three.js</span><span class="marquee-dot">·</span>
                         <span>Express</span><span class="marquee-dot">·</span>
                     </div>
                 </div>
@@ -199,22 +195,38 @@
                 </div>
                 <div class="skills-table">
                     <div class="skills-col">
-                        <h3 class="skills-col-header">Craft</h3>
+                        <h3 class="skills-col-header">Languages</h3>
                         <ul class="skills-list">
-                            <li>React</li>
-                            <li>Node.js / Express</li>
-                            <li>Django REST</li>
                             <li>Python</li>
                             <li>Java</li>
-                            <li>Git</li>
+                            <li>JavaScript</li>
+                            <li>C</li>
+                        </ul>
+                    </div>
+                    <div class="skills-col">
+                        <h3 class="skills-col-header">Backend</h3>
+                        <ul class="skills-list">
+                            <li>Node.js / Express</li>
+                            <li>Django / DRF</li>
                             <li>REST APIs</li>
                         </ul>
                     </div>
                     <div class="skills-col">
-                        <h3 class="skills-col-header">Currently Learning</h3>
+                        <h3 class="skills-col-header">Frontend</h3>
                         <ul class="skills-list">
-                            <li>Three.js</li>
-                            <li>GSAP</li>
+                            <li>React</li>
+                            <li>Next.js</li>
+                            <li>Tailwind CSS</li>
+                            <li>HTML / CSS</li>
+                        </ul>
+                    </div>
+                    <div class="skills-col">
+                        <h3 class="skills-col-header">Tools</h3>
+                        <ul class="skills-list">
+                            <li>Git / GitHub</li>
+                            <li>Azure</li>
+                            <li>Docker</li>
+                            <li>Vercel / Render</li>
                         </ul>
                     </div>
                 </div>
@@ -297,10 +309,10 @@
                                 API</p>
                             <p class="project-description">
                                 Multi-agent AI pipeline that takes a patient summary and a clinical trial ID,
-                                then produces a structured, criterion-by-criterion eligibility assessment
-                                with verdicts, reasoning, and a coordinator brief — powered by a
-                                5-agent sequential pipeline (Extractor → Fetcher → Parser → Reasoner → Briefer)
-                                with zero-hallucination guardrails and provider-agnostic LLM integration.
+                                then produces a structured, criterion-by-criterion eligibility assessment.
+                                Built a 5-agent sequential pipeline (Extractor → Fetcher → Parser → Reasoner → Briefer),
+                                with Groq-hosted Llama 4 Scout for LLM inference and guardrails for JSON validation,
+                                missing-criteria backfill, and fallback brief generation.
                             </p>
                             <div class="project-links">
                                 <a href="https://github.com/pratyuuushhh101/trial-match-ai" class="project-link"
@@ -402,7 +414,7 @@
                         </div>
                     </article>
 
-                    <!-- Project 4 — Hotel Management -->
+                    <!-- Project 4 — Hotel Management
                     <article class="project-card" id="project-hotel">
                         <span class="project-number">04</span>
                         <div class="project-content">
@@ -431,7 +443,28 @@
                                 </a>
                             </div>
                         </div>
-                    </article>
+                    </article> -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section class="section achievements" id="achievements">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">05 — Achievements</span>
+                    <h2 class="section-title">Recognition</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement-item">
+                        <div class="achievement-left">
+                            <span class="achievement-org">Microsoft</span>
+                            <h3 class="achievement-title">AI Unlocked – Campus Edition</h3>
+                            <p class="achievement-desc">Selected for the Top 54 Prototype League out of 300+ teams
+                                nationwide with DataTalk AI.</p>
+                        </div>
+                        <span class="achievement-year">2025</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -440,7 +473,7 @@
         <section class="section contact" id="contact">
             <div class="section-container">
                 <div class="section-header">
-                    <span class="section-tag">05 — Contact</span>
+                    <span class="section-tag">06 — Contact</span>
                     <h2 class="section-title">Let's connect</h2>
                 </div>
                 <div class="contact-simple">

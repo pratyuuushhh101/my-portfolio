@@ -1,5 +1,5 @@
 # pratz.me
 
-Personal portfolio website.
+my portfolio.
 
 **[pratz.me](https://pratz.me)**

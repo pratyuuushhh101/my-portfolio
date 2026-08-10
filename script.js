@@ -145,19 +145,29 @@ function initSmoothScroll() {
 function initActiveNavLink() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
+    if (!sections.length || !navLinks.length) return;
 
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                navLinks.forEach(link => {
-                    link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-                });
+    const onScroll = () => {
+        const scrollPos = window.scrollY + 200;
+        let currentId = '';
+
+        sections.forEach(section => {
+            const top = section.offsetTop;
+            const height = section.offsetHeight;
+            if (scrollPos >= top && scrollPos < top + height) {
+                currentId = section.getAttribute('id');
             }
         });
-    }, { threshold: 0.3, rootMargin: '-72px 0px -50% 0px' });
 
-    sections.forEach(s => obs.observe(s));
+        if (currentId) {
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${currentId}`);
+            });
+        }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 }
 
 /* ===============================

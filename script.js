@@ -12,7 +12,24 @@ document.addEventListener('DOMContentLoaded', () => {
     initScramble();
     initInteractiveTerminal();
     initInteractiveExtras();
+    initCollapsibleSkills();
 });
+
+/* ===============================
+   Collapsible Skills (Mobile)
+   =============================== */
+function initCollapsibleSkills() {
+    const cols = document.querySelectorAll('.skills-col');
+    cols.forEach(col => {
+        const header = col.querySelector('.skills-col-header');
+        if (!header) return;
+        header.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                col.classList.toggle('active');
+            }
+        });
+    });
+}
 
 /* ===============================
    Cursor Glow
@@ -234,32 +251,34 @@ function initInteractiveTerminal() {
     };
 
     const commands = {
-        help: () => ({ text: 'Available commands: about, skills, courses, projects, achievements, datatalk, trialmatch, contact, whoami, ls, cat, git, clear, help' }),
+        help: () => ({ text: 'Available commands: about, skills, courses, projects, achievements, kvcache, datatalk, trialmatch, contact, whoami, ls, cat, git, clear, help' }),
         about: () => ({ text: 'Navigating to about section...', callback: () => scrollSection('about') }),
         skills: () => ({ text: 'Navigating to skills section...', callback: () => scrollSection('skills') }),
         courses: () => ({ text: 'Navigating to coursework section...', callback: () => scrollSection('coursework') }),
         projects: () => ({ text: 'Navigating to projects section...', callback: () => scrollSection('projects') }),
         achievements: () => ({ text: 'Navigating to achievements section...', callback: () => scrollSection('achievements') }),
+        kvcache: () => ({ text: 'Navigating to KV Cache Quantization...', callback: () => scrollSection('project-kvcache') }),
         datatalk: () => ({ text: 'Navigating to DataTalk-AI...', callback: () => scrollSection('project-datatalk') }),
         trialmatch: () => ({ text: 'Navigating to TrialMatch AI...', callback: () => scrollSection('project-trialmatch') }),
         contact: () => ({ text: 'Navigating to contact section...', callback: () => scrollSection('contact') }),
-        whoami: () => ({ text: 'pratz — full-stack dev & AI engineer. 4th sem CS student. I build multi-agent pipelines and ambient intelligence systems.' }),
+        whoami: () => ({ text: 'pratz — full-stack dev & AI engineer. 4th sem CS student. I build multi-agent pipelines, LLM optimizations, and ambient intelligence systems.' }),
         ls: (args) => {
-            if (args && args.includes('skills')) return { text: 'Frontend: React, Next.js, Tailwind\nBackend: Node.js, Express, Django, Java\nOthers: Python, Docker, Git' };
-            if (args && args.includes('projects')) return { text: 'trialmatch/  datatalk/  ieee-ctf/  hotel-system/' };
+            if (args && args.includes('skills')) return { text: 'Frontend: React, Next.js, Tailwind\nBackend: Node.js, Express, Django, Java\nAI/ML: PyTorch, Hugging Face, LLM Optimization\nOthers: Python, Git' };
+            if (args && args.includes('projects')) return { text: 'kvcache/  trialmatch/  datatalk/  ieee-ctf/' };
             if (args && args.includes('courses')) return { text: 'dsa  oop  dbms  os  networks  discrete-math' };
             return { text: 'skills/  courses/  projects/  achievements/  about/  contact/  passion.txt' };
         },
         cat: (args) => {
             const file = args ? args[0] : '';
             if (file === 'passion.txt') return { text: 'building things people actually use.' };
+            if (file === 'projects/kvcache') return { text: 'KV Cache Quantization: INT8 quantization pipeline reducing GPT-2 KV cache footprint by 68.5%.' };
             if (file === 'projects/trialmatch') return { text: 'TrialMatch AI: Multi-agent clinical trial matching engine.' };
             if (file === 'projects/datatalk') return { text: 'DataTalk-AI: Natural language to SQL analytics engine.' };
             return { text: `cat: ${file || 'file'}: not found` };
         },
         git: (args) => {
             if (args && args.includes('log')) {
-                return { text: 'a3f9c21 shipped arena @ hack2skill\n7b2e891 built ctf site for ieee techweek\n0f2b1d3 added trialmatch-ai to portfolio\ne4c2a11 released datatalk-ai (ambient intel for retail stores)' };
+                return { text: '9d4a1b0 added kv cache quantization project\na3f9c21 shipped arena @ hack2skill\n7b2e891 built ctf site for ieee techweek\n0f2b1d3 added trialmatch-ai to portfolio\ne4c2a11 released datatalk-ai (ambient intel for retail stores)' };
             }
             return { text: 'Usage: git log --oneline' };
         },
